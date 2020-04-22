@@ -8,9 +8,6 @@ public class Booking {
 	int seatNumber;
 	
 	
-        public Booking(){
-            
-        }
 	public Booking(Customer costumer, Show show)
 	{
 		this.costumer = costumer;

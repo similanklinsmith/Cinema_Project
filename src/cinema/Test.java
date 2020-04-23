@@ -33,7 +33,7 @@ public class Test {
                 System.out.print("Enter choice : ");
                 choice = choose.nextInt();
                 check = false;
-                if (choice < 1 || choice > 4) {
+                if (choice < 1 || choice > 5) {
                     System.out.println("Please choose again");
                 }
                 switch (choice) {
@@ -125,13 +125,13 @@ public class Test {
                             regisPhone = phoneInput.nextLine();
                             checkPhone = regisPhone.matches(phonePattern);
                             if (!checkPhone) {
-                                System.out.print("Please inform again as the pattern");
+                                System.out.println("Please inform again as the pattern");
                             }
                         } while (!checkPhone);
                         Scanner locInput = new Scanner(System.in);
                         System.out.print("Insert your location : ");
                         String regisLoc = locInput.nextLine();
-                        Customer customer = new Customer(regisLoc, regisPhone, registId, regisSurname, registName);
+                        Customer customer = new Customer(regisLoc, regisPhone, registId, registName, regisSurname);
                         customers.add(customer);
                         for (int i = 0; i < shows.size(); i++) {
                             int showNumber = i + 1;
@@ -143,7 +143,7 @@ public class Test {
                         Scanner showNo = new Scanner(System.in);
                         int showNumber = showNo.nextInt();
                         Scanner rpChoice = new Scanner(System.in);
-                        int repeat = 0;
+                        String repeat;
                         System.out.println();
                         do {
                             shows.get(showNumber - 1).getTheatre().printSeatPlan();
@@ -162,9 +162,9 @@ public class Test {
                                 System.out.println("Sorry this seat is unvailable");
                             }
                             System.out.println();
-                            System.out.print("Enter (1) to reserve another seat or (2) to check out: ");
-                            repeat = rpChoice.nextInt();
-                        } while (repeat == 1);
+                            System.out.print("Enter (N) to reserve another seat \n Enter (Y) to check out: ");
+                            repeat = rpChoice.nextLine();
+                        } while (repeat.equals("N"));
                         System.out.println("-----Receipt-----");
                         int totalCost = 0;
                         for (Booking booking : bookings) {
@@ -177,11 +177,41 @@ public class Test {
                         System.out.println("Total costs: " + totalCost + " ฿");
                         System.out.println();
                         break;
+                    case 4:
+                        long searchId = 0;
+                        Scanner cancel = new Scanner(System.in);
+                        System.out.print("Search by your person ID : ");
+                        searchId = cancel.nextLong();
+                        for (Customer customerl : customers) {
+                            if (customerl.getPersonId() == searchId) {
+                                for (Booking booking : bookings) {
+                                    if (booking.getCostumer().getPersonId() == customerl.getPersonId()) {
+                                        if (booking.unreserveSeat()) {
+
+                                        }
+                                    }
+                                }
+
+                                System.out.print(customerl.getFirstname() + " " + customerl.getLastname() + " is cancelled his/her reservation\n");
+                                break;
+                            } else {
+                                System.out.println("Not Found");
+                                break;
+
+                            }
+                        }
+
+                        break;
+                    case 5:
+                        System.out.println("Thank you");
+                        System.exit(0);
+                        check = false;
                 }
             } catch (InputMismatchException e) {
                 System.out.println("You have to inform only number");
                 choose.next();
                 check = true;
+                
             }
         } while (!check);
     }

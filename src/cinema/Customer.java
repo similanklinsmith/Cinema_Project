@@ -40,6 +40,8 @@ public class Customer extends Person{
     }
 
     public Ticket getTicket() {
+        Ticket t = new Ticket();
+        this.ticket = t;
         return ticket;
     }
 

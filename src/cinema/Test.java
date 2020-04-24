@@ -16,7 +16,6 @@ public class Test {
     public static void main(String[] args) {
         boolean check = false;
         int choice = 0;
-       
         CustomerDatabase custDao = new CustomerDatabaseIMP();
         ArrayList<Show> shows = new ArrayList<Show>();
         ArrayList<Customer> customers = new ArrayList<Customer>();

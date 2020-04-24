@@ -48,10 +48,10 @@ public class CustomerDatabaseIMP implements CustomerDatabase {
         int nRow = 0;
         try (Connection con = DataConnection.getConnection();
                 PreparedStatement pstm = con.prepareStatement(sql)) {
-            pstm.setLong(3, obj.getPersonId());
+            pstm.setBigDecimal(3, BigDecimal.valueOf(obj.getPersonId()));
             pstm.executeUpdate();
         } catch (SQLException e) {
-
+            System.out.println(e.getMessage());
         }
         return nRow;
 
@@ -69,7 +69,7 @@ public class CustomerDatabaseIMP implements CustomerDatabase {
                 Statement stmt = con.createStatement()) {
             ResultSet rs = stmt.executeQuery("SELECT * FROM CUSTOMERS");
             while (rs.next()) {
-                cus.add(new Customer(rs.getString("Loaction"), rs.getString("Phone"), rs.getLong("PeronId"), rs.getString("Firstname"), rs.getString("Lastname")));
+                cus.add(new Customer(rs.getString("Loaction"), rs.getString("Phone"), rs.getLong("PersonId"), rs.getString("Firstname"), rs.getString("Lastname")));
 
             }
 

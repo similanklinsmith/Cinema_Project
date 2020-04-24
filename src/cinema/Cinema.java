@@ -1,5 +1,6 @@
 package cinema;
 
+import Customer_Model.Customer;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;

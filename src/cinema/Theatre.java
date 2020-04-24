@@ -1,5 +1,8 @@
 package cinema;
 
+import Seat_Model.Seat;
+import Seat_Model.SeatStatus;
+import Manager_Model.Manager;
 import java.util.ArrayList;
 import java.util.Scanner;
 

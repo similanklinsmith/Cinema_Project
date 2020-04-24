@@ -1,5 +1,8 @@
 package cinema;
 
+import Seat_Model.SeatStatus;
+import Customer_Model.Customer;
+
 public class Booking {
     int cost;
 	Customer costumer;

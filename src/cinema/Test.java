@@ -1,5 +1,8 @@
 package cinema;
 
+import Customer_Model.Customer;
+
+
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
@@ -7,11 +10,14 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
 public class Test {
 
     public static void main(String[] args) {
         boolean check = false;
         int choice = 0;
+       
+        CustomerDatabase custDao = new CustomerDatabaseIMP();
         ArrayList<Show> shows = new ArrayList<Show>();
         ArrayList<Customer> customers = new ArrayList<Customer>();
         ArrayList<Theatre> theatres = new ArrayList<Theatre>();
@@ -45,7 +51,7 @@ public class Test {
                             boolean managerChoice = false;
                             do {
                                 System.out.println(" 1.) Add Theatre");
-                                System.out.println(" 2.) Add Show");
+                                System.out.println(" 2.) Add Movie");
                                 System.out.println(" 3.) Back");
                                 System.out.print("Enter option : ");
                                 int number = sc.nextInt();
@@ -99,10 +105,10 @@ public class Test {
                         System.out.println("Show all Movie List");
                         for (int i = 0; i < shows.size(); i++) {
                             int showNumber = i + 1;
-                            System.out.println("Show Number: " + showNumber);;
-                            System.out.println("Show Name: " + shows.get(i).getShowName());
-                            System.out.println("Show Date: " + shows.get(i).getShowDate());
-                            System.out.println("\n");
+                            System.out.println("Movie No. : " + showNumber);;
+                            System.out.println("Movie Name : " + shows.get(i).getShowName());
+                            System.out.println("Movie Date : " + shows.get(i).getShowDate());
+                            System.out.println("Type : "+shows.get(i).getTypeShow());
                         }
                         System.out.println("----------------------");
                         break;
@@ -132,7 +138,11 @@ public class Test {
                         System.out.print("Insert your location : ");
                         String regisLoc = locInput.nextLine();
                         Customer customer = new Customer(regisLoc, regisPhone, registId, registName, regisSurname);
+                        custDao.insert(customer);
+                        GenList<Customer> custs = custDao.getAll();
+                        System.out.println(custs.toString());
                         customers.add(customer);
+            
                         for (int i = 0; i < shows.size(); i++) {
                             int showNumber = i + 1;
                             System.out.println("Show Number: " + showNumber);
@@ -184,20 +194,20 @@ public class Test {
                         searchId = cancel.nextLong();
                         for (Customer customerl : customers) {
                             if (customerl.getPersonId() == searchId) {
+                                int removeIndex = customers.indexOf(customerl);
                                 for (Booking booking : bookings) {
                                     if (booking.getCostumer().getPersonId() == customerl.getPersonId()) {
                                         if (booking.unreserveSeat()) {
-
+                                            customers.remove(removeIndex);
+                                            custDao.delete(customerl);
                                         }
                                     }
                                 }
 
                                 System.out.print(customerl.getFirstname() + " " + customerl.getLastname() + " is cancelled his/her reservation\n");
-                                break;
+                                   break;
                             } else {
                                 System.out.println("Not Found");
-                                break;
-
                             }
                         }
 

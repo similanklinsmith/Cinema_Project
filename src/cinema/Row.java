@@ -1,5 +1,7 @@
 package cinema;
 
+import Seat_Model.Seat;
+import Seat_Model.SeatStatus;
 import java.util.ArrayList;
 
 public class Row {
